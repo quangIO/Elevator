@@ -1,5 +1,3 @@
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
 import kotlin.concurrent.fixedRateTimer
 
 /**
@@ -22,12 +20,7 @@ class ElevatorsController(private val elevators: List<Elevator>) {
         fixedRateTimer(name = "loop", initialDelay = 1000, period = 1000) {
             Store.requests.forEach { r->
                 val nearestElevator = findAvailableElevator(r)
-                nearestElevator?.let { e->
-                    e.addRequestFromInside(r.fromFloor)
-                    async(CommonPool) {
-                        e.operate()
-                    }
-                }
+                nearestElevator?.addRequestFromInside(r.fromFloor)
             }
         }
     }
