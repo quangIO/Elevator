@@ -1,3 +1,5 @@
+import java.util.concurrent.ConcurrentHashMap
+
 /**
  * Created by quangio.
  */
@@ -7,8 +9,8 @@ class Elevator(val id: Int = 0) : Runnable {
         operate()
     }
 
-    val destinations: MutableSet<Int> = mutableSetOf()
-    var elevatorState: ElevatorState = ElevatorState()
+    val destinations: MutableSet<Int> = ConcurrentHashMap.newKeySet<Int>()
+    @Volatile var elevatorState: ElevatorState = ElevatorState()
 
     private fun move(direction: Direction) {
         Thread.sleep(1000)
@@ -35,6 +37,7 @@ class Elevator(val id: Int = 0) : Runnable {
         return Direction.NONE
     }
 
+    @Synchronized
     private fun operate() {
         if (destinations.isEmpty()) return
         when (elevatorState.direction) {
@@ -60,7 +63,7 @@ class Elevator(val id: Int = 0) : Runnable {
     fun addRequestFromInside(vararg floors: Int) {
         floors.forEach { destinations.add(it) }
         if (elevatorState.direction == Direction.NONE){
-            Thread(this).run()
+            Thread(this).start()
         }
     }
 }
