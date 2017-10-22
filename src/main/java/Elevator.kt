@@ -5,7 +5,7 @@ import kotlinx.coroutines.experimental.async
  * Created by quangio.
  */
 
-class Elevator(private val id: Int = 0) {
+class Elevator(val id: Int = 0) {
     val destinations: MutableSet<Int> = mutableSetOf()
     var elevatorState: ElevatorState = ElevatorState()
 
@@ -19,8 +19,10 @@ class Elevator(private val id: Int = 0) {
         destinations.remove(elevatorState.floor)
         Store.requests.remove(OutsideRequests(elevatorState.floor, elevatorState.direction))
 
-        if (destinations.isEmpty()) elevatorState.direction = Direction.NONE
 
+        if (destinations.isEmpty()) {
+            elevatorState.direction = Direction.NONE
+        }
         println("$id " + elevatorState)
     }
 
@@ -30,8 +32,7 @@ class Elevator(private val id: Int = 0) {
         return Direction.NONE
     }
 
-    @Synchronized
-    fun operate() {
+    private fun operate() {
         if (destinations.isEmpty()) return
         when (elevatorState.direction) {
             Direction.UP -> {
@@ -52,12 +53,11 @@ class Elevator(private val id: Int = 0) {
         if (elevatorState.direction != Direction.NONE) operate()
     }
 
+    @Synchronized
     fun addRequestFromInside(vararg floors: Int) {
         floors.forEach { destinations.add(it) }
-        if (elevatorState.direction == Direction.NONE) {
-            async(CommonPool) {
-                operate()
-            }
+        async(CommonPool) {
+            operate()
         }
     }
 }
