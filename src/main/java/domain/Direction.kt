@@ -1,4 +1,4 @@
-
+package domain
 /**
  * Created by quangio.
  */

@@ -1,7 +1,14 @@
+import domain.Direction
+import domain.OutsideRequests
+import service.Elevator
+import service.ElevatorsController
+import singleton.Store
+
 /**
  * Created by quangio.
  */
-fun main(args: Array<String>) {
+
+fun sample() {
     val e = Elevator(1)
     val f = Elevator(2)
     val g = Elevator(3)
@@ -18,4 +25,8 @@ fun main(args: Array<String>) {
     e.addRequestFromInside(4)
     manager.addRequest(OutsideRequests(7, Direction.DOWN))
     manager.addRequest(OutsideRequests(3, Direction.DOWN))
+}
+
+fun main(args: Array<String>) {
+
 }

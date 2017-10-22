@@ -1,3 +1,6 @@
+package singleton
+
+import domain.OutsideRequests
 import java.util.concurrent.ConcurrentHashMap
 
 /**

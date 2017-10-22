@@ -1,3 +1,8 @@
+package service
+
+import domain.Direction
+import domain.OutsideRequests
+import singleton.Store
 import kotlin.concurrent.fixedRateTimer
 
 /**
