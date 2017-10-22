@@ -1,11 +1,12 @@
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
-
 /**
  * Created by quangio.
  */
 
-class Elevator(val id: Int = 0) {
+class Elevator(val id: Int = 0) : Runnable {
+    override fun run() {
+        operate()
+    }
+
     val destinations: MutableSet<Int> = mutableSetOf()
     var elevatorState: ElevatorState = ElevatorState()
 
@@ -16,14 +17,16 @@ class Elevator(val id: Int = 0) {
             Direction.DOWN -> elevatorState.floor -= 1
             Direction.NONE -> return
         }
+
         destinations.remove(elevatorState.floor)
         Store.requests.remove(OutsideRequests(elevatorState.floor, elevatorState.direction))
 
-
         if (destinations.isEmpty()) {
             elevatorState.direction = Direction.NONE
+            Store.requests.remove(OutsideRequests(elevatorState.floor, Direction.UP))
+            Store.requests.remove(OutsideRequests(elevatorState.floor, Direction.DOWN))
         }
-        println("$id " + elevatorState)
+        println("$id " + elevatorState + "    " + Store.requests.toString())
     }
 
     private fun findDirection(f1: Int, f2: Int): Direction {
@@ -49,15 +52,15 @@ class Elevator(val id: Int = 0) {
                 elevatorState.direction = findDirection(elevatorState.floor, destinations.first())
             }
         }
+
         move(elevatorState.direction)
         if (elevatorState.direction != Direction.NONE) operate()
     }
 
-    @Synchronized
     fun addRequestFromInside(vararg floors: Int) {
         floors.forEach { destinations.add(it) }
-        async(CommonPool) {
-            operate()
+        if (elevatorState.direction == Direction.NONE){
+            Thread(this).run()
         }
     }
 }
