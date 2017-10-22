@@ -1,10 +1,15 @@
+package service
+
+import domain.Direction
+import domain.OutsideRequests
+import singleton.Store
 import kotlin.concurrent.fixedRateTimer
 
 /**
  * Created by quangio.
  */
 
-class ElevatorsController(private val elevators: List<Elevator>) {
+class ElevatorsController(private val elevators: Array<Elevator>) {
 
     private fun findAvailableElevator(req: OutsideRequests): Elevator? =
         elevators.filter { it.elevatorState.direction == Direction.NONE }

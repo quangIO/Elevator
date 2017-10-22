@@ -1,3 +1,7 @@
+package domain
+
+import domain.Direction
+
 /**
  * Created by quangio.
  */
