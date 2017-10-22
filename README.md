@@ -1,6 +1,6 @@
 # service.Elevator
 
-Implment simple threaded elevator controll system (don't use this in realworld please).
+Implement simple threaded elevator controll system (don't use this in realworld please).
 
 (default run on port 4567)
 
@@ -18,4 +18,4 @@ User make request with direction :dir (either u for UP or d for DOWN) from :floo
 ##### GET /status
 
 See current overall status
- 
+
