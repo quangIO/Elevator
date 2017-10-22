@@ -21,7 +21,7 @@ See current overall status
 
 # Todo
 
-* Elevator is not slay tree, save power
+* Elevator is not splay tree, save power
 * Write unit tests
 * Migrate to Kotlin coroutines
 * Maintenance mode
