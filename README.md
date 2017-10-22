@@ -1,5 +1,8 @@
 # service.Elevator
 
+[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com)
+
 Implement simple threaded elevator control system (don't use this in production please).
 
 (default run on port 4567)
