@@ -55,7 +55,7 @@ fun main(args: Array<String>) {
         manager.addRequest(OutsideRequests(floor, dir))
         "ok"
     }
-    get("/status") { req, response ->
+    get("/status") { _, _ ->
         val r = HashMap<String, Any>()
         r["OutsideRequest"] = Store.requests
         elevators.forEach {
