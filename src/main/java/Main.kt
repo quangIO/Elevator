@@ -55,4 +55,12 @@ fun main(args: Array<String>) {
         manager.addRequest(OutsideRequests(floor, dir))
         "ok"
     }
+    get("/status") { req, response ->
+        val r = HashMap<String, Any>()
+        r["OutsideRequest"] = Store.requests
+        elevators.forEach {
+            r[it.id.toString()] = it.elevatorState
+        }
+        r
+    }
 }
