@@ -2,6 +2,7 @@ package service
 
 import domain.Direction
 import domain.ElevatorState
+import domain.OutsideRequests
 import singleton.Store
 import java.util.concurrent.ConcurrentHashMap
 
